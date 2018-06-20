@@ -1,0 +1,9 @@
+# ----------------------------------------------------------------------
+# EXAMPLE CONFIG FILE FOR IML CLEANUP
+# ----------------------------------------------------------------------
+dir = /your/starting/path
+filemask = *.log,*.gz
+maxage = 180
+maxdepth =
+deleteemptydirs = 1
+runas = root
