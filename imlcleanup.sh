@@ -7,8 +7,9 @@
 # by reading config files from /etc/imlcleanup.d
 #
 # ----------------------------------------------------------------------
-# 2018-06-19  <axel.hahn@iml.unibe.ch> v1.1  parameter support
 # 2018-06-18  <axel.hahn@iml.unibe.ch> v1.0
+# 2018-06-19  <axel.hahn@iml.unibe.ch> v1.1  parameter support
+# 2022-03-11  <axel.hahn@iml.unibe.ch> v1.1  shell fixes; update message if dir does not exist
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -34,10 +35,11 @@ function getValue(){
         cat "${mycfgfile}" | grep "^$1\ = " | cut -f 3- -d " "
 }
 
+# show help
 function usage(){
-        echo Syntax: `basename $0` [options]
+        echo "Syntax: $(basename $0) [options]"
         echo "    -d             dryrun;  show results but no deletion"
-        echo "    -f [filename]  process given conf file instead of all in $confdir"
+        echo "    -f [filename]  process given conf file instead of all in $confdir/"
         echo "    -h             this help"
         echo
 }
@@ -100,19 +102,21 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "INFO: reading configs from $sConfFiles"
-ls -1 $sConfFiles | while read mycfgfile
+ls -1 $sConfFiles | while read -r mycfgfile
 do
         echo
         echo ">>>>>>>>>> PROCESSING $mycfgfile ..." | tee -a $tmperrorfile
         echo
         # cat $mycfgfile
-        mydirs=`getValue dir`
-        filemasks=`getValue filemask`
-        typeset -i iAge=`getValue maxage`
-        typeset -i iMaxDepth=`getValue maxdepth`
+        mydirs=$(getValue dir)
+        filemasks=$(getValue filemask)
+        typeset -i iAge
+        iAge=$(getValue maxage)
+        typeset -i iMaxDepth
+        iMaxDepth=$(getValue maxdepth)
 
-        bDeleteemptydirs=`getValue deleteemptydirs`
-        sRunAs=`getValue runas`
+        bDeleteemptydirs=$(getValue deleteemptydirs)
+        sRunAs=$(getValue runas)
 
         # ----- checks
         if [ -z "$mydirs" -o -z "$filemasks" -o -z "$iAge" ]; then
@@ -130,7 +134,7 @@ do
                 #   filemask = *.log,*.gz
                 #   ... results in
                 #   \( -name "*.log" -o -name "*.gz" \)
-                maskParam="`echo "${filemasks}" | sed 's#,#\" -o -name \"#g'`"
+                maskParam="$(echo "${filemasks}" | sed 's#,#\" -o -name \"#g')"
 
                 if [ $? -ne 0 ]; then
                         echo ERROR: user [$sRunAs] is unknown | tee -a $tmperrorfile
@@ -145,8 +149,8 @@ do
                                 echo "-----> $mydir" | tee -a $tmperrorfile
                                 echo
                                 if [ ! -d "$mydir" ]; then
-                                        echo ERROR: $mydir does not exist | tee -a $tmperrorfile
-                                        echo Skipping this file           | tee -a $tmperrorfile
+                                        echo ERROR: $mydir does not exist or is not a directory | tee -a $tmperrorfile
+                                        echo Skipping this dir                                  | tee -a $tmperrorfile
                                 else
                                         echo "[1] cleanup ${filemasks} older ${iAge} days" | tee -a $tmperrorfile
                                         set -vx
@@ -175,7 +179,7 @@ do
 done
 
 echo ---------- DONE
-typeset -i iErrors=`grep "ERROR" $tmperrorfile | wc -l`
+typeset -i iErrors=$(grep "ERROR" $tmperrorfile | wc -l)
 echo ERRORS: $iErrors
 echo
 if [ $iErrors -gt 0 ]; then

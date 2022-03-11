@@ -1,8 +1,4 @@
-
-
 # IML CLEANUP #
-
-
 
 ## Introduction ##
 
@@ -16,8 +12,6 @@ How to get it work:
 * In the /etc/imlcleanup.d/ you can put (as many) configfiles you want
 * a shell script loops over all config files and performs the actions of all conf files.
 * you additionally need to create a cronjob to execute this script regulary (i.e. once per day)
-
-
 
 ## License ##
 
@@ -37,8 +31,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-	
 
 ## Installation ##
 
@@ -67,8 +59,6 @@ For the config files:
 # chmod 0600 /etc/imlcleanup.d/*
 ```
 
-
-
 ## Command Line Parameters ##
 
 ### -h: Help ##
@@ -93,15 +83,13 @@ This is useful with -d (dryrun).
 Without parameter or -f [filename] delete actions will be performed.
 For testing purposes you can use a dryrun to see the found files and empty directories.
 
-
-
 ## Configuration Files ##
 
 ### Example ###
 
 First of all an example:
 
-```
+```text
 dir = /your/starting/path
 filemask = *.log,*.gz
 maxage = 180
@@ -142,14 +130,11 @@ The extension *.conf will be scanned by default.
 Remark:
 It means by renaming a config to .bak (or whatever) is a simple way to disable a job.
 
-
-
 ## Cronjob ##
 
 In a cron.d config file or crontab of root you need to start the cleanup script for processing all configs at once.
 
 As an example a file /etc/cron.d/imlcleanup can be one line to start it daily at 4:12 am.
-
 
 ```shell
 $ cat /etc/cron.d/imlcleanup
