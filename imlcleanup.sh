@@ -9,7 +9,8 @@
 # ----------------------------------------------------------------------
 # 2018-06-18  <axel.hahn@iml.unibe.ch> v1.0
 # 2018-06-19  <axel.hahn@iml.unibe.ch> v1.1  parameter support
-# 2022-03-11  <axel.hahn@iml.unibe.ch> v1.1  shell fixes; update message if dir does not exist
+# 2022-03-11  <axel.hahn@iml.unibe.ch> v1.2  shell fixes; update message if dir does not exist
+# 2022-03-13  <axel.hahn@iml.unibe.ch> v1.3  Fix: do not delete start dir while deleting empty subdirs
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -163,7 +164,7 @@ do
                                         if [ "$bDeleteemptydirs" = "1" ]; then
                                                 echo [2] Delete empty dirs | tee -a $tmperrorfile
                                                 set -vx
-                                                ${suPrefix} "find ${mydir} ${depthParam} -depth -type d -empty -print -exec $cmdDirs {} \;" \
+                                                ${suPrefix} "find ${mydir} ${depthParam} -mindepth 1 -depth -type d -empty -print -exec $cmdDirs {} \;" \
                                                         2>>$tmperrorfile \
                                                         || echo ERROR: cleanup of empty dirs failed \
                                                         | tee -a $tmperrorfile
