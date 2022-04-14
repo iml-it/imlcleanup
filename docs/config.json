@@ -1,0 +1,21 @@
+{
+    "title": "IML Cleanup",
+    "author": "Axel Hahn",
+    "tagline": "Delete files older N days in a start folder.",
+    "ignore": {
+        "files": ["30_PHP-client/Plugins/Checks/_skeleton.md"],
+        "folders": ["99_Not_Ready"]
+    },
+    "html": {
+        "auto_toc": true,
+        "auto_landing": false,
+        "date_modified": false,
+        "jump_buttons": true,
+        "edit_on_github_": "iml-it/appmonitor/tree/master/docs",
+        "links": {
+            "Git Repo": "https://github.com/iml-it/imlcleanup"
+        },
+        "theme": "daux-blue",
+        "search": true
+    }
+}
