@@ -13,7 +13,8 @@
         "jump_buttons": true,
         "edit_on_github_": "iml-it/appmonitor/tree/master/docs",
         "links": {
-            "Git Repo": "https://github.com/iml-it/imlcleanup"
+            "Git Repo": "https://github.com/iml-it/imlcleanup",
+            "IML Opensource": "https://os-docs.iml.unibe.ch/"
         },
         "theme": "daux-blue",
         "search": true
