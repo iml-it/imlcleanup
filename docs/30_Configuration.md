@@ -1,6 +1,8 @@
 
 # Configuration Files #
 
+In the /etc/imlcleanup.d/ folder can be several configurations - one per cleanup job.
+
 ## Example ##
 
 First of all an example:

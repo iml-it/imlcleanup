@@ -15,13 +15,14 @@ To prevent that users or applications generate a config file with destructive in
 For the installation directory
 
 ```shell
-# chown -R root:root /opt/imlcleanup/
-# chmod 0700 /opt/imlcleanup/imlcleanup.sh
+chown -R root:root /opt/imlcleanup/
+chmod 0700 /opt/imlcleanup/imlcleanup.sh
 ```
 
 For the config files:
+
 ```shell
-# chown -R root:root /etc/imlcleanup.d/
-# chmod 0700 /etc/imlcleanup.d/
-# chmod 0600 /etc/imlcleanup.d/*
+chown -R root:root /etc/imlcleanup.d/
+chmod 0700 /etc/imlcleanup.d/
+chmod 0600 /etc/imlcleanup.d/*
 ```
